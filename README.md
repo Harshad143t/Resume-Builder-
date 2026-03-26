@@ -109,8 +109,6 @@ Rewrites the description to be professional, impactful, and concise (2-3 sentenc
 | Google Gemini API | gemini-2.5-flash | AI content generation |
 | jsPDF | 2.5.1 | PDF document creation |
 | html2canvas | 1.4.1 | Captures preview pane as image for PDF |
-| Font Awesome | 6.4.0 | Icons in navigation and form labels |
-| Google Fonts | — | Inter and Merriweather for template typography |
 
 All external libraries are loaded via CDN — no local dependencies.
 
@@ -124,42 +122,11 @@ No personal data is sent to any server. The only outbound request is the prompt 
 
 ---
 
-## Browser Support
-
-| Browser | Minimum Version |
-|---|---|
-| Chrome | 80+ |
-| Firefox | 75+ |
-| Edge | 80+ |
-| Safari | 13+ |
 
 JavaScript must be enabled. Internet connection required for CDN libraries and AI features.
 
 ---
 
-## Known Limitations
-
-- The Gemini API key is hardcoded — do not commit a production key to a public repository
-- If the free API quota (HTTP 429) is exceeded, AI features stop working until the quota resets
-- Closing the browser tab discards all entered data — there is no save or auto-fill feature
-- The two-column template may not render perfectly in PDF due to html2canvas and CSS flex layout constraints
-- No input validation — empty fields are silently passed through to the preview
-
----
-
-## Roadmap
-
-- [ ] Backend proxy to protect the API key
-- [ ] localStorage saving so data persists across sessions
-- [ ] AI full-resume review feature
-- [ ] Drag-and-drop reordering of dynamic entries
-- [ ] Custom accent colour picker per template
-- [ ] Import existing resume and pre-fill via AI extraction
-- [ ] Print-to-PDF fallback using `window.print()`
-
----
-
-## Contributing
 
 Pull requests are welcome. For major changes, please open an issue first to discuss what you would like to change.
 
@@ -171,8 +138,3 @@ Pull requests are welcome. For major changes, please open an issue first to disc
 
 ---
 
-## License
-
-This project is licensed under the MIT License. See the [LICENSE](LICENSE) file for details.
-
----
