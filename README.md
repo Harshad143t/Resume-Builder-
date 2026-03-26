@@ -26,18 +26,6 @@ Open `resume2.html` directly in any modern browser. No installation or server re
 
 ---
 
-## Templates
-
-| Name | CSS Class | Font | Key Style |
-|---|---|---|---|
-| Modern | `.modern` | Segoe UI / Roboto | Blue left-border header |
-| Professional | `.professional` | Times New Roman | Centered header and sections |
-| Creative | `.creative` | Trebuchet MS | Full-width purple header |
-| Two-Column | `.twocolumn` | System default | Dark header with sidebar layout |
-| Minimalist | `.minimalist` | Helvetica Neue | Light weight, wide letter-spacing |
-
----
-
 ## Project Structure
 
 ```
