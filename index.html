@@ -1,0 +1,281 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Resume Builder | AI Powered</title>
+    
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&display=swap" rel="stylesheet">
+    <link href="https://fonts.googleapis.com/css2?family=Merriweather:wght@300;400;700&display=swap" rel="stylesheet">
+    
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    
+    <link rel="stylesheet" href="resume.css">
+
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/jspdf/2.5.1/jspdf.umd.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/html2canvas/1.4.1/html2canvas.min.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/marked/marked.min.js"></script>
+</head>
+
+<body>
+    <div class="app-container">
+        
+        <nav class="top-nav">
+            <div class="logo"><i class="fa-solid fa-file-signature"></i>Resume Builder</div>
+            <div class="nav-controls">
+                <select id="template-selector" class="template-select">
+                    <option value="modern">Modern Template</option>
+                    <option value="professional">Professional Template</option>
+                    <option value="creative">Creative Template</option>
+                    <option value="twocolumn">Two-Column (Canva Style)</option>
+                    <option value="minimalist">Minimalist</option>
+                </select>
+                <button id="download-btn" class="btn primary-btn"><i class="fa-solid fa-download"></i> Download
+                    PDF</button>
+            </div>
+        </nav>
+
+        <main class="workspace">
+            
+            <section class="editor-pane">
+                <div class="editor-header">
+                    <h2>Edit Details</h2>
+                    <p>Changes are saved automatically and shown in preview.</p>
+                </div>
+
+                <div class="accordion" id="form-accordion">
+                    
+                    <div class="accordion-item active">
+                        <button class="accordion-header">
+                            <span><i class="fa-solid fa-user"></i> Personal Information</span>
+                        </button>
+                        <div class="accordion-content">
+                            <div class="form-grid">
+                                <div class="input-group full-width">
+                                    <label>Full Name</label>
+                                    <input type="text" id="name" placeholder="Your Name">
+                                </div>
+                                <div class="input-group full-width">
+                                    <label>Professional Title</label>
+                                    <input type="text" id="jobTitle" placeholder="ex.. Software Engineer">
+                                </div>
+                                <div class="input-group">
+                                    <label>Email</label>
+                                    <input type="email" id="email" placeholder="Your Email">
+                                </div>
+                                <div class="input-group">
+                                    <label>Phone</label>
+                                    <input type="tel" id="phone" placeholder="Phone">
+                                </div>
+                                <div class="input-group full-width">
+                                    <label>Address</label>
+                                    <input type="text" id="address" placeholder="address">
+                                </div>
+                                <div class="input-group full-width">
+                                    <label>LinkedIn / Portfolio URL</label>
+                                    <input type="url" id="linkedin" placeholder="ex.. Your.linkedin.com">
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+
+                    <div class="accordion-item">
+                        <button class="accordion-header">
+                            <span><i class="fa-solid fa-address-card"></i> Professional Summary</span>
+                        </button>
+                        <div class="accordion-content">
+                            <div class="input-group full-width">
+                                <div class="label-header">
+                                    <label>Summary</label>
+                                    <button class="btn secondary-btn small-btn ai-btn" id="generate-summary-btn"
+                                        title="Use AI to generate a summary based on your experience">
+                                        AI Generate
+                                    </button>
+                                </div>
+                                <textarea id="summary" rows="4"
+                                    placeholder="Briefly describe your professional background..."></textarea>
+                            </div>
+                        </div>
+                    </div>
+
+                    <div class="accordion-item">
+                        <button class="accordion-header">
+                            <span><i class="fa-solid fa-briefcase"></i> Work Experience</span>
+                        </button>
+                        <div class="accordion-content" id="experience-container">
+                            <div class="dynamic-list" id="experience-list">
+                                
+                            </div>
+                            <button class="btn dashed-btn full-width" id="add-experience-btn">
+                                + Add Experience
+                            </button>
+                        </div>
+                    </div>
+
+                    <div class="accordion-item">
+                        <button class="accordion-header">
+                            <span><i class="fa-solid fa-graduation-cap"></i> Education</span>
+                        </button>
+                        <div class="accordion-content" id="education-container">
+                            <div class="dynamic-list" id="education-list">
+                                
+                            </div>
+                            <button class="btn dashed-btn full-width" id="add-education-btn">
+                                + Add Education
+                            </button>
+                        </div>
+                    </div>
+
+                    <div class="accordion-item">
+                        <button class="accordion-header">
+                            <span><i class="fa-solid fa-code"></i> Projects</span>
+                        </button>
+                        <div class="accordion-content" id="projects-container">
+                            <div class="dynamic-list" id="project-list">
+                                
+                            </div>
+                            <button class="btn dashed-btn full-width" id="add-project-btn">
+                                + Add Project
+                            </button>
+                        </div>
+                    </div>
+
+                    <div class="accordion-item">
+                        <button class="accordion-header">
+                            <span><i class="fa-solid fa-bolt"></i> Skills</span>
+                        </button>
+                        <div class="accordion-content">
+                            <div class="input-group full-width">
+                                <div class="label-header">
+                                    <label>Core Skills (comma separated)</label>
+                                    <button class="btn secondary-btn small-btn ai-btn" id="suggest-skills-btn">
+                                        Suggest Skills
+                                    </button>
+                                </div>
+                                <textarea id="skills" rows="3" placeholder="JavaScript, React, Node.js..."></textarea>
+                            </div>
+                        </div>
+                    </div>
+
+                    <div class="accordion-item">
+                        <button class="accordion-header">
+                            <span><i class="fa-solid fa-language"></i> Languages</span>
+                        </button>
+                        <div class="accordion-content">
+                            <div class="input-group full-width">
+                                <label>Languages (comma separated)</label>
+                                <textarea id="languages" rows="2" placeholder="English, Spanish, Hindi..."></textarea>
+                            </div>
+                        </div>
+                    </div>
+
+                    <div class="accordion-item">
+                        <button class="accordion-header">
+                            <span><i class="fa-solid fa-heart"></i> Interests</span>
+                        </button>
+                        <div class="accordion-content">
+                            <div class="input-group full-width">
+                                <label>Interests (comma separated)</label>
+                                <textarea id="interests" rows="2" placeholder="Reading, Coding, Chess..."></textarea>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </section>
+
+            <section class="preview-pane">
+                <div class="preview-wrapper">
+                    <div class="resume-document modern" id="resume-preview">
+                        
+                        <div class="resume-header">
+                            <h1 id="preview-name">Your Name</h1>
+                            <h2 id="preview-jobTitle">Professional Title</h2>
+                            <div class="contact-bar">
+                                <span class="preview-contact-item"><i class="fa-solid fa-envelope"></i> <span
+                                        id="preview-email">email@example.com</span></span>
+                                <span class="preview-contact-item"><i class="fa-solid fa-phone"></i> <span
+                                        id="preview-phone">Phone Number</span></span>
+                                <span class="preview-contact-item"><i class="fa-solid fa-location-dot"></i> <span
+                                        id="preview-address">Location</span></span>
+                                <span class="preview-contact-item"><i class="fa-brands fa-linkedin"></i> <span
+                                        id="preview-linkedin">LinkedIn Profile</span></span>
+                            </div>
+                        </div>
+
+                        <div class="resume-body">
+                            
+                            <div class="resume-sidebar">
+                                <div class="resume-section" id="section-skills">
+                                    <h3>Skills</h3>
+                                    <div class="section-content">
+                                        <ul class="skills-list" id="preview-skills">
+                                            <li>Add your skills</li>
+                                        </ul>
+                                    </div>
+                                </div>
+
+                                <div class="resume-section" id="section-languages">
+                                    <h3>Languages</h3>
+                                    <div class="section-content">
+                                        <ul class="skills-list" id="preview-languages">
+                                            
+                                        </ul>
+                                    </div>
+                                </div>
+
+                                <div class="resume-section" id="section-interests">
+                                    <h3>Interests</h3>
+                                    <div class="section-content">
+                                        <ul class="skills-list" id="preview-interests">
+                                            
+                                        </ul>
+                                    </div>
+                                </div>
+                            </div>
+
+                            <div class="resume-main">
+                                <div class="resume-section" id="section-summary">
+                                    <h3>Professional Summary</h3>
+                                    <div class="section-content" id="preview-summary">
+                                        Briefly describe your professional background...
+                                    </div>
+                                </div>
+
+                                <div class="resume-section" id="section-experience">
+                                    <h3>Experience</h3>
+                                    <div class="section-content" id="preview-experience-list">
+                                        
+                                    </div>
+                                </div>
+
+                                <div class="resume-section" id="section-education">
+                                    <h3>Education</h3>
+                                    <div class="section-content" id="preview-education-list">
+                                        
+                                    </div>
+                                </div>
+
+                                <div class="resume-section" id="section-projects">
+                                    <h3>Projects</h3>
+                                    <div class="section-content" id="preview-project-list">
+                                        
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </section>
+        </main>
+
+        <div id="loading-overlay" class="hidden">
+            <div class="loading-box">Loading AI. Please wait...</div>
+        </div>
+    </div>
+
+    <script src="gemini-api.js"></script>
+    <script src="resume2.js"></script>
+</body>
+
+</html>
